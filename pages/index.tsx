@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Head from 'next/head'
-import Link from 'next/link'
+// import Link from 'next/link'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import PostCard from '../components/PostCard'
@@ -36,7 +36,7 @@ export const getPostView = async (slug: string): Promise<number> => {
   return await axios
     .get('https://api.splitbee.io/v1/blog.hyram.net/pageviews', {
       params: { page: slug },
-      headers: { 'x-api-key': process.env.SPLITBEE_API_TOKEN||'JKYXBB40ZC4J' }
+      headers: { 'x-api-key': process.env.SPLITBEE_API_TOKEN || 'JKYXBB40ZC4J' }
     })
     .then(res => res.data.count)
 }
@@ -46,7 +46,7 @@ export const getStaticProps = async () => {
   await Promise.all(
     posts.map(async p => {
       p.views = await getPostView(formatSlug(p.date, p.slug))
-      console.log(p.views);
+      console.log(p.views)
     })
   )
 
@@ -73,13 +73,13 @@ const HomePage = ({ posts }: { posts: Post[] }) => {
               <img className="rounded-full" src="https://blog.hyram.net/images/avatar.png" alt="avatar" width="128px" />
             </div>
             <div className="mt-8 text-2xl font-bold dark:text-white">Hyram&apos;s Blog</div>
-            <div className="mt-2 text-gray-400">
+            {/* <div className="mt-2 text-gray-400">
               Check out{' '}
               <Link href="/friends">
                 <a className="text-purple-400 hover:text-purple-300 rounded">Friends & Guestbook</a>
               </Link>{' '}
               if you want to drop by and say hello!
-            </div>
+            </div> */}
 
             <div className="mt-12 leading-loose flex flex-col space-y-4">
               {posts.map(post => post.published && <PostCard key={post.id} post={post} />)}
